@@ -9,19 +9,31 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
-    test_player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2) 
     dt = 0
     running = True 
+
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    #setting the container of players, now all players have this
+    Player.containers = (updateable, drawable)
+
+    #instance of a player, and automatically adds itself to the container above
+    test_player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2) 
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
         
-        
         screen.fill("black")
-        test_player.update(dt)
-        test_player.draw(screen)
+
+        #update everything in the group which now has test_player
+        updateable.update(dt)
+
+        #draw everthing in the group which now has test player
+        for objects in drawable:
+            objects.draw(screen)
         
         #this actually draws everything to the screen, right now we are drawing evertyhing off screen then 'flip' the whole thing and draw everything at once to the screen
         #this is better for game smoothness, no flickering and more efficiency 
