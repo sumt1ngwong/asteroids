@@ -1,6 +1,8 @@
 import pygame
 from constants import *
 from player import *
+from asteroid import *
+from asteroidfield import *
 
 def main():
     print("Starting Asteroids!")
@@ -12,14 +14,20 @@ def main():
     dt = 0
     running = True 
 
-    updateable = pygame.sprite.Group()
+    updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
 
     #setting the container of players, now all players have this
-    Player.containers = (updateable, drawable)
+    Player.containers = (updatable, drawable)
+
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable)
 
     #instance of a player, and automatically adds itself to the container above
     test_player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2) 
+ 
+    test_astrofield = AsteroidField()
 
     while running:
         for event in pygame.event.get():
@@ -29,7 +37,7 @@ def main():
         screen.fill("black")
 
         #update everything in the group which now has test_player
-        updateable.update(dt)
+        updatable.update(dt)
 
         #draw everthing in the group which now has test player
         for objects in drawable:
