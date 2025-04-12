@@ -18,11 +18,14 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
+    splitting = pygame.sprite.Group()
+
  
     #setting the container of players, now all players have this
     Player.containers = (updatable, drawable)
-
-    Asteroid.containers = (asteroids, updatable, drawable)
+    Shot.containers = (shots, updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable, splitting)
     AsteroidField.containers = (updatable)
 
     #instance of a player, and automatically adds itself to the container above
@@ -41,9 +44,19 @@ def main():
         updatable.update(dt)
 
         for asteroid in asteroids:
-            if asteroid.collision_check(test_player):
-                print("Game over!")
-                sys.exit()
+            for shot in shots:
+                if asteroid.collision_check(test_player):
+                    print("Game over!")
+                    pygame.quit()
+                    sys.exit()
+                
+                if asteroid.collision_check(shot):
+                    shot.kill()
+                    asteroid.split()
+
+
+
+       
 
 
         #draw everthing in the group which now has test player
