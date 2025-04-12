@@ -3,6 +3,7 @@ from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
+import sys
 
 def main():
     print("Starting Asteroids!")
@@ -17,7 +18,7 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
-
+ 
     #setting the container of players, now all players have this
     Player.containers = (updatable, drawable)
 
@@ -38,6 +39,12 @@ def main():
 
         #update everything in the group which now has test_player
         updatable.update(dt)
+
+        for asteroid in asteroids:
+            if asteroid.collision_check(test_player):
+                print("Game over!")
+                sys.exit()
+
 
         #draw everthing in the group which now has test player
         for objects in drawable:
