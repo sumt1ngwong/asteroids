@@ -10,6 +10,8 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
     pygame.init()
+    pygame.font.init()
+    score = 0
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
     dt = 0
@@ -53,11 +55,12 @@ def main():
                 if asteroid.collision_check(shot):
                     shot.kill()
                     asteroid.split()
+                    score += 1 
 
+        font = pygame.font.Font(None, 36)
+        score_text = font.render(f'Score: {score}', True, (255, 255, 255))
+        screen.blit(score_text, (10, 10))
 
-
-
-       
 
 
         #draw everthing in the group which now has test player
