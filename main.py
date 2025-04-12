@@ -46,21 +46,15 @@ def main():
         updatable.update(dt)
 
         for asteroid in asteroids:
+            if asteroid.collision_check(test_player):
+                print("Game over!")
+                pygame.quit()
+                sys.exit()
             for shot in shots:
-                if asteroid.collision_check(test_player):
-                    print("Game over!")
-                    pygame.quit()
-                    sys.exit()
-                
                 if asteroid.collision_check(shot):
                     shot.kill()
                     asteroid.split()
-                    score += 1 
-
-        font = pygame.font.Font(None, 36)
-        score_text = font.render(f'Score: {score}', True, (255, 255, 255))
-        screen.blit(score_text, (10, 10))
-
+                  
 
 
         #draw everthing in the group which now has test player
