@@ -53,7 +53,8 @@ def main():
             for shot in shots:
                 if asteroid.collision_check(shot):
                     shot.kill()
-                    asteroid.split()
+                    if asteroid.radius > ASTEROID_MIN_RADIUS:
+                        asteroid.split()
                     asteroid.kill()
                     score += 1 
 
@@ -79,3 +80,5 @@ if __name__ == "__main__":
     main()
 
 
+
+                
